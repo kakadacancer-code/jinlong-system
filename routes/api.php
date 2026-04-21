@@ -8,6 +8,7 @@ use App\Http\Controllers\LeaseController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\MaintenanceRequestController;
 
+
 Route::apiResource('properties',          PropertyController::class);
 Route::apiResource('units',               UnitController::class);
 Route::apiResource('tenants',             TenantController::class);
