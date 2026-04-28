@@ -1,45 +1,57 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            User Dashboard
-        </h2>
-    </x-slot>
+{{-- resources/views/dashboard.blade.php --}}
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+@extends('layouts.app')
 
-            <!-- Welcome Message -->
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mb-6">
-                <div class="p-6 text-gray-900">
-                    👤 Welcome User: <strong>{{ Auth::user()->name }}</strong>
+@section('content')
+<div class="flex h-screen bg-gray-50 overflow-hidden">
+
+    {{-- Sidebar --}}
+    
+
+    {{-- Main --}}
+    <div class="flex-1 flex flex-col overflow-hidden">
+
+        {{-- Header --}}
+        
+
+        {{-- Content --}}
+        <main class="flex-1 overflow-y-auto p-8">
+
+            {{-- Greeting --}}
+            <h2 class="text-3xl font-bold text-gray-900 mb-8">
+                Welcome back, {{ auth()->user()->name ?? '' }}!
+            </h2>
+
+            {{-- Stat cards --}}
+            <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6">
+
+                <div class="bg-white rounded-2xl border border-gray-100 p-6
+                            hover:shadow-md hover:-translate-y-0.5 transition-all duration-200">
+                    <p class="text-sm text-gray-400 font-medium">Properties</p>
+                    <p class="text-4xl font-bold text-gray-900 mt-3">{{ $propertyCount }}</p>
                 </div>
+
+                <div class="bg-white rounded-2xl border border-gray-100 p-6
+                            hover:shadow-md hover:-translate-y-0.5 transition-all duration-200">
+                    <p class="text-sm text-gray-400 font-medium">Active Tenants</p>
+                    <p class="text-4xl font-bold text-gray-900 mt-3">3</p>
+                </div>
+
+                <div class="bg-white rounded-2xl border border-gray-100 p-6
+                            hover:shadow-md hover:-translate-y-0.5 transition-all duration-200">
+                    <p class="text-sm text-gray-400 font-medium">Monthly Revenue</p>
+                    <p class="text-4xl font-bold text-gray-900 mt-3">$1850</p>
+                </div>
+
+                <div class="bg-white rounded-2xl border border-gray-100 p-6
+                            hover:shadow-md hover:-translate-y-0.5 transition-all duration-200">
+                    <p class="text-sm text-gray-400 font-medium">Pending Maintenance</p>
+                    <p class="text-4xl font-bold text-gray-900 mt-3">2</p>
+                </div>
+
             </div>
 
-            <!-- User Info Card -->
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6">
-                    <h3 class="text-lg font-semibold text-gray-800 mb-4">My Information</h3>
-                    <table class="w-full text-sm text-gray-600">
-                        <tr class="border-b">
-                            <td class="py-2 font-medium">Name</td>
-                            <td class="py-2">{{ Auth::user()->name }}</td>
-                        </tr>
-                        <tr class="border-b">
-                            <td class="py-2 font-medium">Email</td>
-                            <td class="py-2">{{ Auth::user()->email }}</td>
-                        </tr>
-                        <tr>
-                            <td class="py-2 font-medium">Role</td>
-                            <td class="py-2">
-                                <span class="bg-blue-100 text-blue-600 px-2 py-1 rounded-full text-xs font-semibold">
-                                    {{ Auth::user()->role }}
-                                </span>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-
-        </div>
+        </main>
     </div>
-</x-app-layout>
+</div>
+@endsection
