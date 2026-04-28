@@ -1,88 +1,86 @@
-<x-guest-layout>
-    <x-auth-session-status class="mb-4" :status="session('status')" />
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Sign in — Jinlong System</title>
 
-    <div class="min-h-screen flex items-center justify-center px-4 py-12 bg-gray-50">
-        <div class="w-full max-w-md bg-white border border-gray-100 rounded-2xl shadow-sm px-8 py-10">
+    <script src="https://cdn.tailwindcss.com"></script>
 
-            {{-- Brand --}}
-            <div class="text-center mb-8">
-                <div class="w-10 h-10 mx-auto mb-4 rounded-lg border border-gray-100 bg-gray-50 flex items-center justify-center text-lg">
-                    ✦
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        body { font-family: 'Sora', sans-serif; }
+    </style>
+</head>
+
+<body class="min-h-screen flex bg-slate-100">
+
+    <!-- LEFT PANEL -->
+    <div class="hidden lg:flex flex-1 relative bg-slate-900 overflow-hidden">
+
+        <!-- grid -->
+        <div class="absolute inset-0 opacity-20"
+             style="background-image: linear-gradient(#ffffff10 1px, transparent 1px),
+                                   linear-gradient(90deg, #ffffff10 1px, transparent 1px);
+                    background-size: 48px 48px;">
+        </div>
+
+        <!-- glow -->
+        <div class="absolute -top-24 -right-24 w-[400px] h-[400px] rounded-full bg-indigo-500/20 blur-3xl"></div>
+
+        <div class="relative flex flex-col justify-between p-12 text-white">
+
+            <!-- brand -->
+            <div class="flex items-center gap-3">
+                <div class="w-9 h-9 flex items-center justify-center bg-white/10 rounded-lg">
+                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" class="text-white">
+                        <rect width="7" height="7" rx="2" fill="currentColor"/>
+                        <rect x="11" width="7" height="7" rx="2" fill="currentColor" opacity=".6"/>
+                        <rect y="11" width="7" height="7" rx="2" fill="currentColor" opacity=".6"/>
+                        <rect x="11" y="11" width="7" height="7" rx="2" fill="currentColor" opacity=".3"/>
+                    </svg>
                 </div>
-                <h1 class="text-xl font-semibold text-gray-900 tracking-tight">Welcome back</h1>
-                <p class="text-sm text-gray-500 mt-1">Sign in to your account to continue</p>
+                <span class="font-semibold text-base">Jinlong System</span>
             </div>
 
-            <form method="POST" action="{{ route('login') }}">
-                @csrf
-
-                {{-- Email --}}
-                <div class="mb-5">
-                    <x-input-label for="email" :value="__('Email address')" class="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1.5" />
-                    <x-text-input
-                        id="email"
-                        class="block w-full px-3.5 py-2.5 text-sm bg-gray-50 border border-gray-200 rounded-lg focus:bg-white focus:border-gray-400 focus:ring-0 transition"
-                        type="email"
-                        name="email"
-                        :value="old('email')"
-                        placeholder="you@example.com"
-                        required autofocus autocomplete="username"
-                    />
-                    <x-input-error :messages="$errors->get('email')" class="mt-1.5 text-xs text-red-500" />
-                </div>
-
-                {{-- Password --}}
-                <div class="mb-5">
-                    <x-input-label for="password" :value="__('Password')" class="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1.5" />
-                    <x-text-input
-                        id="password"
-                        class="block w-full px-3.5 py-2.5 text-sm bg-gray-50 border border-gray-200 rounded-lg focus:bg-white focus:border-gray-400 focus:ring-0 transition"
-                        type="password"
-                        name="password"
-                        placeholder="••••••••"
-                        required autocomplete="current-password"
-                    />
-                    <x-input-error :messages="$errors->get('password')" class="mt-1.5 text-xs text-red-500" />
-                </div>
-
-                {{-- Remember + Forgot --}}
-                <div class="flex items-center justify-between mb-6">
-                    <label for="remember_me" class="inline-flex items-center gap-2 cursor-pointer">
-                        <input id="remember_me" type="checkbox" name="remember"
-                            class="w-3.5 h-3.5 rounded border-gray-300 text-indigo-600 focus:ring-0">
-                        <span class="text-sm text-gray-500">{{ __('Remember me') }}</span>
-                    </label>
-
-                    @if (Route::has('password.request'))
-                        <a href="{{ route('password.request') }}"
-                           class="text-sm text-gray-500 hover:text-gray-800 border-b border-gray-200 hover:border-gray-500 transition">
-                            {{ __('Forgot password?') }}
-                        </a>
-                    @endif
-                </div>
-
-                {{-- Submit --}}
-                <x-primary-button class="w-full justify-center py-2.5 text-sm font-medium tracking-wide rounded-lg">
-                    {{ __('Sign in') }}
-                </x-primary-button>
-
-                {{-- Divider --}}
-                <div class="flex items-center gap-3 my-5 text-xs text-gray-300">
-                    <span class="flex-1 h-px bg-gray-100"></span>
-                    <span>or</span>
-                    <span class="flex-1 h-px bg-gray-100"></span>
-                </div>
-
-                {{-- Register --}}
-                <p class="text-center text-sm text-gray-500">
-                    {{ __("Don't have an account?") }}
-                    <a href="{{ route('register') }}"
-                       class="text-gray-800 font-medium border-b border-gray-300 hover:border-gray-800 transition ml-0.5">
-                        {{ __('Register here') }}
-                    </a>
+            <!-- content -->
+            <div>
+                <h1 class="text-3xl font-bold leading-tight mb-4">
+                    Manage everything<br>in one place.
+                </h1>
+                <p class="text-slate-400 max-w-sm text-sm leading-relaxed">
+                    Streamlined tools for your team. Secure, reliable, and built for performance.
                 </p>
+            </div>
 
-            </form>
+            <!-- dots -->
+            <div class="flex gap-2">
+                <span class="w-2 h-2 rounded-full bg-white/30"></span>
+                <span class="w-6 h-2 rounded-full bg-indigo-500"></span>
+                <span class="w-2 h-2 rounded-full bg-white/20"></span>
+            </div>
         </div>
     </div>
-</x-guest-layout>
+
+    <!-- RIGHT LOGIN -->
+    <main class="flex w-full lg:w-[520px] items-center justify-center p-6 lg:p-12">
+
+        <div class="w-full max-w-md">
+
+            <!-- your login card -->
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                <x-auth-card />
+            </div>
+
+            <p class="text-center text-xs text-slate-500 mt-6">
+                &copy; {{ date('Y') }} Jinlong System — All rights reserved
+            </p>
+
+        </div>
+
+    </main>
+
+</body>
+</html>

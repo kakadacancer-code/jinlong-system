@@ -1,36 +1,46 @@
 <?php
 
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PropertyController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\TenantController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\RentsController;
 
-// Auth routes
-require __DIR__.'/auth.php';
-
-// Root page
+// ── Root ──────────────────────────────────────────
 Route::get('/', function () {
-    return redirect()->route('login');
+    return redirect()->route('dashboard');
 });
 
-// Profile routes
-Route::middleware(['auth'])->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-// User dashboard
-Route::middleware(['auth'])->group(function () {
-    Route::get('/dashboard', [UserController::class, 'index'])->name('dashboard');
-});
+// ── Properties ────────────────────────────────────
+Route::get('/properties',           [PropertyController::class, 'index']) ->name('properties.index');
+Route::get('/properties/create',    [PropertyController::class, 'form'])  ->name('properties.create');
+Route::post('/properties',          [PropertyController::class, 'store']) ->name('properties.store');
+Route::get('/properties/{id}',      [PropertyController::class, 'show'])  ->name('properties.show');
+Route::get('/properties/{id}/edit', [PropertyController::class, 'edit'])  ->name('properties.edit');
+Route::put('/properties/{id}',      [PropertyController::class, 'update'])->name('properties.update');
+Route::delete('/properties/{id}',   [PropertyController::class, 'destroy'])->name('properties.destroy');
 
-// Admin dashboard must have both 'auth' and 'admin' middleware
-Route::middleware(['auth', 'admin'])->group(function () {
-    Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
-});
+// ── Tenants ───────────────────────────────────────
+Route::get('/tenants',           [TenantController::class, 'index']) ->name('tenants.index');
+Route::get('/tenants/create',    [TenantController::class, 'form'])  ->name('tenants.create');
+Route::post('/tenants',          [TenantController::class, 'store']) ->name('tenants.store');
+Route::get('/tenants/{id}',      [TenantController::class, 'show'])  ->name('tenants.show');
+Route::get('/tenants/{id}/edit', [TenantController::class, 'edit'])  ->name('tenants.edit');
+Route::put('/tenants/{id}',      [TenantController::class, 'update'])->name('tenants.update');
+Route::delete('/tenants/{id}',   [TenantController::class, 'destroy'])->name('tenants.destroy');
 
+// ── Static pages ──────────────────────────────────
+Route::get('/payments',    fn () => view('pages.payments'))   ->name('payments');
+Route::get('/maintenance', fn () => view('pages.maintenance'))->name('maintenance');
+Route::get('/leases',      fn () => view('pages.leases'))     ->name('leases');
+Route::get('/reports',     fn () => view('pages.reports'))    ->name('reports');
 
-
-Route::get('/rents', [RentsController::class, 'index']);
+// ── Logout ────────────────────────────────────────
+Route::post('/logout', function () {
+    Auth::logout();
+    request()->session()->invalidate();
+    request()->session()->regenerateToken();
+    return redirect('/');
+})->name('logout');
